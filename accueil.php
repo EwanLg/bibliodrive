@@ -15,5 +15,16 @@
     <?php
     include 'entete.html'
     ?>
+
+<div class="row">
+
+ <div class="col-md-9">
+contenu
+ </div>
+
+ <div class="col-md-3">
+authent  
+ </div>
+ </div>
 </body>
 </html>  
