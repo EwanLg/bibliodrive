@@ -28,9 +28,9 @@ try {
          <p class="h3">La bibliothèque de Moulinsart est fermée au public jusqu'à nouvel ordre. Mais il vous est possible de réserver et retirer vos mivres via notre service Biblio Drive !</p>
          <nav class="navbar navbar-expand-sm navbar-dark bg-light">
             <div class="container-fluid">
-               <form style="width: 100vh;" class="d-flex">
-                  <input class="form-control me-2" type="text" placeholder="Search">
-                  <button class="btn btn-primary" type="button">Search</button>
+               <form style="width: 100vh;" class="d-flex" action="lister_livres.php" method = "get">
+                  <input class="form-control me-2" name="noauteur" type="text" placeholder="Rechercher dans le catalogue (saisie du nom de l'auteur)">
+                  <button class="btn btn-primary" type="submit">Rechercher</button>
                </form>
                <button class="btn btn-danger" type="button">Panier</button>
             </div>
