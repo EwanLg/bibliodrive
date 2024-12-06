@@ -21,13 +21,12 @@
  <div class="col-md-9">
  <?php
 if (isset($_GET['noauteur']) && !empty($_GET['noauteur'])) {
-    // Récupère la valeur de 'noauteur' depuis l'URL
+
     $noauteur = htmlspecialchars($_GET['noauteur']);
 
-    // Requête SQL pour vérifier si l'auteur existe dans la table 'auteur' en utilisant le nom
     $sqlAuteur = "SELECT noauteur FROM auteur WHERE nom = :nom";
     $stmt = $connexion->prepare($sqlAuteur);
-    $stmt->bindParam(':nom', $noauteur, PDO::PARAM_STR); // Utilise PDO::PARAM_STR pour les chaînes
+    $stmt->bindParam(':nom', $noauteur, PDO::PARAM_STR); 
 
     try {
         $stmt->execute();
@@ -35,14 +34,12 @@ if (isset($_GET['noauteur']) && !empty($_GET['noauteur'])) {
 
         if ($auteur) {
 
-            // Requête SQL pour obtenir les titres des livres de cet auteur
             $sqlLivres = "SELECT titre FROM livre WHERE noauteur = :noauteur";
             $stmtLivres = $connexion->prepare($sqlLivres);
-            $stmtLivres->bindParam(':noauteur', $auteur['noauteur'], PDO::PARAM_INT); // Assurez-vous que c'est un entier
+            $stmtLivres->bindParam(':noauteur', $auteur['noauteur'], PDO::PARAM_INT); 
             $stmtLivres->execute();
             $livres = $stmtLivres->fetchAll(PDO::FETCH_ASSOC);
 
-            // Affiche les résultats
             if ($livres) {
                 echo "<h3>Livres de l'auteur :</h3>";
                 echo "<ul>";
@@ -54,7 +51,7 @@ if (isset($_GET['noauteur']) && !empty($_GET['noauteur'])) {
                 echo "<p>Aucun livre trouvé pour cet auteur.</p>";
             }
         } else {
-            // Affiche un message de débogage si l'auteur n'est pas trouvé
+
             echo "<p>Auteur non trouvé pour le nom : " . htmlspecialchars($noauteur) . "</p>";
         }
     } catch (PDOException $e) {
