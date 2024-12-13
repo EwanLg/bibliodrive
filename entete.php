@@ -1,5 +1,4 @@
 <?php
-session_start();
 try {
 
   $dns = 'mysql:host=localhost;dbname=bibliodrive';
