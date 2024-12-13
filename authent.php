@@ -1,47 +1,53 @@
 <?php
-$isUserConnected = isset($_SESSION['userid']) && !empty($_SESSION['userid']);
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && !$isUserConnected) {
+if (!isset($_POST['btnSeConnecter'])) { 
+
+    echo
+    '<form action="" method = "post" ">
+    <div class="form-floating mb-3 mt-3">
+  <input type="text" class="form-control" id="email" placeholder="Enter email" name="email">
+  <label for="email">Email</label>
+</div>
+
+<div class="form-floating mt-3 mb-3">
+  <input type="text" class="form-control" id="pwd" placeholder="Enter password" name="motdepasse">
+  <label for="pwd">Password</label>
+</div>
+<button type="submit" class="btn btn-primary" name="btnSeConnecter">Submit</button>
+</form>';
+
+} else
+
+{
+
+
+    require_once 'authent.php';
+
     $email = $_POST['email'];
-    $password = $_POST['motdepasse'];
 
-    $sql = "SELECT * FROM utilisateur WHERE email = :email";
-    $stmt = $connexion->prepare($sql);
-    $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-    $stmt->execute();
+    $motdepasse = $_POST['motdepasse'];
 
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+ 
 
-    if ($user && password_verify($password, $user['motdepasse'])) {
-        $_SESSION['userid'] = $user['id'];
-        $_SESSION['email'] = $user['email'];
-        $message = "Connexion réussie. Bienvenue, " . $user['email'];
-    } else {
-        $loginError = "Identifiants incorrects.";
+    $requete = "SELECT * FROM utilisateur WHERE email='" . $email . "' AND motdepasse = '" . $motdepasse . "'";
+
+
+    $select = $connexion->query($requete);
+
+
+    $select->setFetchMode(PDO::FETCH_OBJ);
+
+    $enregistrement = $select->fetch();
+
+    if ($enregistrement) { 
+
+        echo '<h1>Connexion réussie !</h1>';
+
+    } else { 
+        echo "<h1>Echec à la connexion.</h1>";
+
     }
+
 }
 
-if ($isUserConnected) {
-    echo "Bienvenue, vous êtes connecté !";
-    echo "<a href='logout.php'>Se déconnecter</a>";
-} else {
-    if (isset($loginError)) {
-        echo $loginError;
-    }
-    if (isset($message)) {
-        echo $message;
-    }
-
-    echo "<form action='' method='POST'>";
-    echo "<div class='mb-3 mt-3'>";
-    echo "<label for='email' class='form-label'>Email:</label>";
-    echo "<input type='email' class='form-control' id='email' placeholder='Entrez email' name='email' required>";
-    echo "</div>";
-    echo "<div class='mb-3'>";
-    echo "<label for='motdepasse' class='form-label'>Mot de passe:</label>";
-    echo "<input type='password' class='form-control' id='motdepasse' placeholder='Entrez mot de passe' name='motdepasse' required>";
-    echo "</div>";
-    echo "<button type='submit' class='btn btn-primary'>Se connecter</button>";
-    echo "</form>";
-}
 ?>
