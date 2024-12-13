@@ -18,7 +18,7 @@
 
 <div class="row">
  <?php
-if (isset($_GET['nomlivre']) && !empty($_GET['nomlivre'])) {
+if (isset($_GET['id']) && !empty($_GET['nomlivre'])) {
     echo "<div class='col-md-6'>";
     $nomlivre = $_GET['nomlivre'];
     $sqlAuteur = "SELECT * FROM livre INNER JOIN auteur ON auteur.noauteur = livre.noauteur WHERE titre = :nomlivre";

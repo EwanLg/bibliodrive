@@ -45,7 +45,7 @@ if (isset($_GET['noauteur']) && !empty($_GET['noauteur'])) {
                 echo "<ul>";
                 echo "<form action='detail.php' method = 'get'>";
                 foreach ($livres as $livre) {
-                    echo "<li><a href='detail.php?nomlivre=".$livre['titre']."'>".$livre['titre'] . "</a></li>";
+                    echo "<li><a href='detail.php?noLivre=".$livre['titre']."'>".$livre['titre'] . "</a></li>";
                 }
                 echo "</form>";
                 echo "</ul>";
