@@ -22,7 +22,7 @@
  <?php
 if (isset($_GET['noauteur']) && !empty($_GET['noauteur'])) {
 
-    $noauteur = htmlspecialchars($_GET['noauteur']);
+    $noauteur = $_GET['noauteur'];
 
     $sqlAuteur = "SELECT noauteur FROM auteur WHERE nom = :nom";
     $stmt = $connexion->prepare($sqlAuteur);
@@ -43,16 +43,18 @@ if (isset($_GET['noauteur']) && !empty($_GET['noauteur'])) {
             if ($livres) {
                 echo "<h3>Livres de l'auteur :</h3>";
                 echo "<ul>";
+                echo "<form action='detail.php' method = 'get'>";
                 foreach ($livres as $livre) {
-                    echo "<li>" . htmlspecialchars($livre['titre']) . "</li>";
+                    echo "<li><a href='detail.php?nomlivre=".$livre['titre']."'>".$livre['titre'] . "</a></li>";
                 }
+                echo "</form>";
                 echo "</ul>";
             } else {
                 echo "<p>Aucun livre trouvé pour cet auteur.</p>";
             }
         } else {
 
-            echo "<p>Auteur non trouvé pour le nom : " . htmlspecialchars($noauteur) . "</p>";
+            echo "<p>Auteur non trouvé pour le nom : ".$noauteur."</p>";
         }
     } catch (PDOException $e) {
         echo "Erreur lors de l'exécution de la requête : " . $e->getMessage();
