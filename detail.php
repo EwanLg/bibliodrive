@@ -18,12 +18,12 @@
 
 <div class="row">
  <?php
-if (isset($_GET['id']) && !empty($_GET['nomlivre'])) {
+if (isset($_GET['nolivre']) && !empty($_GET['nolivre'])) {
     echo "<div class='col-md-6'>";
-    $nomlivre = $_GET['nomlivre'];
-    $sqlAuteur = "SELECT * FROM livre INNER JOIN auteur ON auteur.noauteur = livre.noauteur WHERE titre = :nomlivre";
+    $nolivre = $_GET['nolivre'];
+    $sqlAuteur = "SELECT * FROM livre INNER JOIN auteur ON auteur.noauteur = livre.noauteur WHERE nolivre = :nolivre";
     $stmt = $connexion->prepare($sqlAuteur);
-    $stmt->bindParam(':nomlivre', $nomlivre, PDO::PARAM_STR);
+    $stmt->bindParam(':nolivre', $nolivre, PDO::PARAM_STR);
     $stmt->execute();
     $specif = $stmt->fetch(PDO::FETCH_ASSOC);
     echo "Auteur : ".$specif['prenom']." ".$specif['nom']."<br>";
@@ -33,6 +33,8 @@ if (isset($_GET['id']) && !empty($_GET['nomlivre'])) {
     echo "</div>";
     echo "<div class='col-md-3'>";
     echo $specif['prenom']." ".$specif['nom']."<br>";
+    echo $specif['titre']."<br>";
+    echo "<img src='covers/".$specif['photo']."' width='200vh'>";
 }
     else{
         echo "<div class='col-md-9'>";
@@ -46,5 +48,13 @@ if (isset($_GET['id']) && !empty($_GET['nomlivre'])) {
     ?>  
  </div>
  </div>
+ <div class="row">
+ <div class='col-md-2'>
+    <p>Disponible</p>
+</div>
+<div class='col-md-10'>
+<p>Pour pouvoir réserver vous devez posséder un compte et vous identifier.</p>
+</div>
+</div>
 </body>
 </html>  

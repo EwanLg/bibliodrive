@@ -1,14 +1,12 @@
 <?php
-
-// Connexion au serveur
-
+session_start();
 try {
 
-  $dns = 'mysql:host=localhost;dbname=bibliodrive'; // dbname : nom de la base
+  $dns = 'mysql:host=localhost;dbname=bibliodrive';
 
-  $utilisateur = 'root'; // root sur vos postes
+  $utilisateur = 'root';
 
-  $motDePasse = ''; // pas de mot de passe sur vos postes
+  $motDePasse = '';
 
   $connexion = new PDO( $dns, $utilisateur, $motDePasse );
 
@@ -18,6 +16,7 @@ try {
 
   die();
 
+  
 }
 
 ?>

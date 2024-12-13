@@ -34,7 +34,7 @@ if (isset($_GET['noauteur']) && !empty($_GET['noauteur'])) {
 
         if ($auteur) {
 
-            $sqlLivres = "SELECT titre FROM livre WHERE noauteur = :noauteur";
+            $sqlLivres = "SELECT titre, nolivre FROM livre WHERE noauteur = :noauteur";
             $stmtLivres = $connexion->prepare($sqlLivres);
             $stmtLivres->bindParam(':noauteur', $auteur['noauteur'], PDO::PARAM_INT); 
             $stmtLivres->execute();
@@ -45,7 +45,7 @@ if (isset($_GET['noauteur']) && !empty($_GET['noauteur'])) {
                 echo "<ul>";
                 echo "<form action='detail.php' method = 'get'>";
                 foreach ($livres as $livre) {
-                    echo "<li><a href='detail.php?noLivre=".$livre['titre']."'>".$livre['titre'] . "</a></li>";
+                    echo "<li><a href='detail.php?nolivre=".$livre['nolivre']."'>".$livre['titre'] . "</a></li>";
                 }
                 echo "</form>";
                 echo "</ul>";
