@@ -19,7 +19,9 @@
 <div class="row">
 
  <div class="col-md-9">
- 
+ <?php
+ echo $_SESSION['panier']
+ ?>
 </div>
 
  <div class="col-md-3">

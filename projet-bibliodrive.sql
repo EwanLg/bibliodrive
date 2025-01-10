@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 29 nov. 2024 à 16:13
--- Version du serveur : 10.4.27-MariaDB
--- Version de PHP : 8.1.12
+-- Généré le : ven. 10 jan. 2025 à 16:46
+-- Version du serveur : 10.4.32-MariaDB
+-- Version de PHP : 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `projet-bibliodrive`
+-- Base de données : `bibliodrive`
 --
 
 -- --------------------------------------------------------
@@ -142,7 +142,7 @@ INSERT INTO `livre` (`nolivre`, `noauteur`, `titre`, `isbn13`, `anneeparution`, 
 --
 
 CREATE TABLE `utilisateur` (
-  `mel` varchar(40) NOT NULL,
+  `email` varchar(40) NOT NULL,
   `motdepasse` varchar(100) NOT NULL,
   `nom` varchar(40) NOT NULL,
   `prenom` varchar(40) NOT NULL,
@@ -156,9 +156,9 @@ CREATE TABLE `utilisateur` (
 -- Déchargement des données de la table `utilisateur`
 --
 
-INSERT INTO `utilisateur` (`mel`, `motdepasse`, `nom`, `prenom`, `adresse`, `ville`, `codepostal`, `profil`) VALUES
-('admin@admin.fr', 'admin', 'Dupont', 'Pierre', '1, rue de la Paix', 'PARIS', 75000, 'admin'),
-('louis.martin@rabelais.com', 'secret', 'Martin', 'Louis', '1, rue Rabelais', 'SAINT BRIEUC', 22000, 'client');
+INSERT INTO `utilisateur` (`email`, `motdepasse`, `nom`, `prenom`, `adresse`, `ville`, `codepostal`, `profil`) VALUES
+('admin@admin.fr', '21232f297a57a5a743894a0e4a801fc3', 'Dupont', 'Pierre', '1, rue de la Paix', 'PARIS', 75000, 'admin'),
+('louis.martin@rabelais.com', '1', 'Martin', 'Louis', '1, rue Rabelais', 'SAINT BRIEUC', 22000, 'client');
 
 --
 -- Index pour les tables déchargées
@@ -188,7 +188,7 @@ ALTER TABLE `livre`
 -- Index pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  ADD PRIMARY KEY (`mel`);
+  ADD PRIMARY KEY (`email`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
@@ -215,7 +215,7 @@ ALTER TABLE `livre`
 --
 ALTER TABLE `emprunter`
   ADD CONSTRAINT `fk_emprunter_livre` FOREIGN KEY (`nolivre`) REFERENCES `livre` (`nolivre`),
-  ADD CONSTRAINT `fk_emprunter_utilisateur` FOREIGN KEY (`mel`) REFERENCES `utilisateur` (`mel`);
+  ADD CONSTRAINT `fk_emprunter_utilisateur` FOREIGN KEY (`mel`) REFERENCES `utilisateur` (`email`);
 
 --
 -- Contraintes pour la table `livre`
