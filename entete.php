@@ -30,7 +30,7 @@ try {
                   <input class="form-control me-2" name="noauteur" type="text" placeholder="Rechercher dans le catalogue (saisie du nom de l'auteur)">
                   <button class="btn btn-primary" type="submit">Rechercher</button>
                </form>
-               <button class="btn btn-danger" type="button">Panier</button>
+               <a href="panier.php"><button class="btn btn-danger" type="button">Panier</button></a>
             </div>
          </nav>
       </div>

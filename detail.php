@@ -29,7 +29,8 @@ if (isset($_GET['nolivre']) && !empty($_GET['nolivre'])) {
     echo "Auteur : ".$specif['prenom']." ".$specif['nom']."<br>";
     echo "ISBN13 : ".$specif['isbn13']."<br>";
     echo "Résumé du livre : <br>";
-    echo $specif['detail'];
+    echo $specif['detail']."<br><br>";
+    echo "Date de parution : ".$specif['anneeparution'];
     echo "</div>";
     echo "<div class='col-md-3'>";
     echo $specif['prenom']." ".$specif['nom']."<br>";
@@ -50,11 +51,49 @@ if (isset($_GET['nolivre']) && !empty($_GET['nolivre'])) {
  </div>
  <div class="row">
  <div class='col-md-2'>
-    <p>Disponible</p>
+    <?php
+    $sqlDisponibilite = "SELECT * FROM emprunter WHERE nolivre = :nolivre AND dateretour IS NULL";
+    $stmtDisponibilite = $connexion->prepare($sqlDisponibilite);
+    $stmtDisponibilite->bindParam(':nolivre', $nolivre, PDO::PARAM_STR);
+    $stmtDisponibilite->execute();
+    $empruntEnCours = $stmtDisponibilite->fetch();
+
+    if ($empruntEnCours) {
+        echo "<p class='text-danger'>Disponibilité : Ce livre est actuellement emprunté.</p>";
+    } else {
+        echo "<p class='text-success'>Disponibilité : Ce livre est disponible.</p>";
+    }
+    ?>
 </div>
 <div class='col-md-10'>
-<p>Pour pouvoir réserver vous devez posséder un compte et vous identifier.</p>
+    <?php
+if (isset($_SESSION['email'])) {
+    echo "<a href='?nolivre=".$nolivre ."&action=ajouter' class='btn btn-primary'>Emprunter</a>";
+
+} else{
+    echo "<p class='text-danger'>Pour pouvoir réserver vous devez posséder un compter et vous identifier.</p>";
+}
+?>
 </div>
 </div>
+<?php
+
+    if (isset($_GET['action']) && $_GET['action'] == 'ajouter' && isset($_GET['nolivre'])) {
+        $nolivre = $_GET['nolivre'];
+
+        if (!isset($_SESSION['panier'])) {
+            $_SESSION['panier'] = array();
+        }
+
+        $_SESSION['panier'][$nolivre] = array(
+            'nolivre' => $nolivre,
+            'titre' => $specif['titre'],
+            'auteur' => $specif['prenom'] . " " . $specif['nom'],
+            'photo' => $specif['photo'],
+        );
+
+        echo "<p class='text-success'>Le livre a été ajouté à votre panier.</p>";
+    }
+    ?>
 </body>
-</html>  
+</html>

@@ -25,7 +25,11 @@ if (isset($_POST['btnSeConnecter'])) {
     if ($enregistrement) {
         $_SESSION['email'] = $enregistrement->email;
         $_SESSION['motdepasse'] = $enregistrement->motdepasse;
-        $_SESSION['prenom'] = $enregistrement->prenom;  
+        $_SESSION['prenom'] = $enregistrement->prenom;
+        $_SESSION['nom'] = $enregistrement->nom;
+        $_SESSION['adresse'] = $enregistrement->adresse;  
+        $_SESSION['ville'] = $enregistrement->ville;  
+        $_SESSION['codepostal'] = $enregistrement->codepostal;    
         header('Location: ' . $_SERVER['PHP_SELF']);
         exit();
     } else {
@@ -34,9 +38,11 @@ if (isset($_POST['btnSeConnecter'])) {
 }
 
 if (isset($_SESSION['email'])) {
-    echo "<h1>Bienvenue, " . $_SESSION['prenom'] . " !</h1>";
-
-    echo "<form action='" . $_SERVER['PHP_SELF'] . "' method='post'>
+    echo "<h1 class='text-wrap text-end'>".$_SESSION['prenom']." ".$_SESSION['nom']."</h1><br>";
+    echo "<h5 class='text-wrap text-end'>".$_SESSION['email']."</h5>";
+    echo "<h5 class='text-wrap text-end'>".$_SESSION['adresse']."</h5>";
+    echo "<h5 class='text-wrap text-end'>".$_SESSION['codepostal']." ".$_SESSION['ville']."</h5>";
+    echo "<form action='" . $_SERVER['PHP_SELF'] . "' method='post' class='d-flex justify-content-end'>
         <button type='submit' class='btn btn-danger' name='btnDeconnecter'>Se déconnecter</button>
     </form>";
 } else {
