@@ -16,8 +16,9 @@ try {
   die();
 
   
+  
 }
-
+session_start(); 
 ?>
 <div class="container-fluid">
 
