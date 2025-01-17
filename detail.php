@@ -78,22 +78,29 @@ if (isset($_SESSION['email'])) {
 </div>
 <?php
 
-    if (isset($_GET['action']) && $_GET['action'] == 'ajouter' && isset($_GET['nolivre'])) {
-        $nolivre = $_GET['nolivre'];
+if (isset($_GET['action']) && $_GET['action'] == 'ajouter' && isset($_GET['nolivre'])) {
+    $nolivre = $_GET['nolivre'];
 
-        if (!isset($_SESSION['panier'])) {
-            $_SESSION['panier'] = array();
-        }
-
-        $_SESSION['panier'][$nolivre] = array(
-            'nolivre' => $nolivre,
-            'titre' => $specif['titre'],
-            'auteur' => $specif['prenom'] . " " . $specif['nom'],
-            'photo' => $specif['photo'],
-        );
-
-        echo "<p class='text-success'>Le livre a été ajouté à votre panier.</p>";
+    if (!isset($_SESSION['panier'])) {
+        $_SESSION['panier'] = array();
     }
-    ?>
+    if (count($_SESSION['panier']) >= 5) {
+        echo "<p class='text-danger'>Vous ne pouvez pas ajouter plus de 5 livres à votre panier.</p>";
+    } else {
+        if (!isset($_SESSION['panier'][$nolivre])) {
+            $_SESSION['panier'][$nolivre] = array(
+                'nolivre' => $nolivre,
+                'titre' => $specif['titre'],
+                'auteur' => $specif['prenom'] . " " . $specif['nom'],
+                'photo' => $specif['photo'],
+            );
+            echo "<p class='text-success'>Le livre a été ajouté à votre panier.</p>";
+        } else {
+            echo "<p class='text-warning'>Ce livre est déjà dans votre panier.</p>";
+        }
+    }
+}
+?>
+
 </body>
 </html>

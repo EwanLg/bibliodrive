@@ -1,6 +1,5 @@
 <?php
 
-
 if (isset($_POST['btnDeconnecter'])) {
     session_unset(); 
     session_destroy(); 
@@ -30,6 +29,8 @@ if (isset($_POST['btnSeConnecter'])) {
         $_SESSION['adresse'] = $enregistrement->adresse;  
         $_SESSION['ville'] = $enregistrement->ville;  
         $_SESSION['codepostal'] = $enregistrement->codepostal;    
+        $_SESSION['profil'] = $enregistrement->profil;
+
         header('Location: ' . $_SERVER['PHP_SELF']);
         exit();
     } else {
@@ -42,6 +43,13 @@ if (isset($_SESSION['email'])) {
     echo "<h5 class='text-wrap text-end'>".$_SESSION['email']."</h5>";
     echo "<h5 class='text-wrap text-end'>".$_SESSION['adresse']."</h5>";
     echo "<h5 class='text-wrap text-end'>".$_SESSION['codepostal']." ".$_SESSION['ville']."</h5>";
+
+    if (isset($_SESSION['profil']) && $_SESSION['profil'] === 'admin') {
+        echo "<form action='panneau_admin.php' method='post' class='d-flex justify-content-end'>
+            <button type='submit' class='btn btn-warning'>Accéder au panneau admin</button>
+        </form>";
+    }
+
     echo "<form action='" . $_SERVER['PHP_SELF'] . "' method='post' class='d-flex justify-content-end'>
         <button type='submit' class='btn btn-danger' name='btnDeconnecter'>Se déconnecter</button>
     </form>";
